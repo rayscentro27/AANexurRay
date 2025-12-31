@@ -92,6 +92,10 @@ export const supabaseAuthAdapter: AuthAdapter = {
       return { user: null, error: 'Check your email to confirm registration.' };
     }
 
+    if (!authData.session) {
+      return { user: null, error: 'Check your email to confirm registration, then sign in.' };
+    }
+
     const { user, error: profileError } = await ensureProfile(authUser, { name: data.name });
     if (profileError) return { user: null, error: profileError };
 
